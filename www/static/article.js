@@ -1,4 +1,4 @@
-var apipath="http://127.0.0.1:8000/skf/prescription_sync/";
+var apipath="http://c003.businesssolutionapps.com/demo/prescription_sync/";
 
 $(document).ready(function(){
 	
