@@ -211,8 +211,8 @@ function goDoctor(){
 
 
 /*camera area start*/
+
 function takePicture(){
-	//alert();
 navigator.camera.getPicture( cameraSuccess, cameraError, {
 		quality: 90,
 		targetWidth: 400,
@@ -224,7 +224,7 @@ navigator.camera.getPicture( cameraSuccess, cameraError, {
 	
 }
 
-function onSuccessA(uri) {
+function cameraSuccess(uri) {
     var image = document.getElementById('myImage1');
     image.src = uri;
 	myImage1 = uri;
@@ -232,32 +232,12 @@ function onSuccessA(uri) {
 	
 	$("#myImage1").val(myImage1);
 	
-	//uploadPhoto()
+	takePicture();
 }
-
-/*localStorage.picFlag=0;
-
-function cameraSuccess(uri){  
-	var picNo=parseInt(localStorage.picFlag)+1 
-	var imageDiv="myImage"+picNo
-	var imageText="prPhoto"+picNo
-	localStorage.picFlag=picNo
-	var image = document.getElementById(imageDiv);
-	image.src = uri;
-	imagePath = uri;
-	
-	//alert (uri)
-	//takePicture();
-	
-    
-	$("#"+imageText).val(imagePath);
-        
-}
-*/
 function cameraError(message){
     alert("Canceled!"); 
-	
 }
+
 /*camera area end*/
 
 var options = {
