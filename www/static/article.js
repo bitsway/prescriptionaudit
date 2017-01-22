@@ -6,7 +6,7 @@ $(document).ready(function(){
 		$.mobile.navigate(url);
 	}else{
 		//url = "#homePage";
-		url = "#second_page";
+		url = "#homePage";
 		$.mobile.navigate(url);
 	}
 	
@@ -232,7 +232,7 @@ function cameraSuccess(uri) {
 	
 	$("#myImage1").val(myImage1);
 	
-	takePicture();
+	//takePicture();
 }
 function cameraError(message){
     alert("Canceled!"); 
