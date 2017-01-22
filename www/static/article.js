@@ -1,13 +1,12 @@
 var apipath="http://c003.businesssolutionapps.com/demo/prescription_sync/";
 
 $(document).ready(function(){
-	
 	if(localStorage.user_id==undefined){
 		url = "#loginPage";
 		$.mobile.navigate(url);
 	}else{
-		url = "#homePage";
-		//url = "#doctor_search_page";
+		//url = "#homePage";
+		url = "#second_page";
 		$.mobile.navigate(url);
 	}
 	
@@ -72,19 +71,14 @@ function medListShow(){
 	url = "#second_page";
 	$.mobile.navigate(url);	
 	}
-/////////////////////////////////////////////////////////////////
-function goDoctor(){
-	url = "#doctor_search_page";
-	$.mobile.navigate(url);
-	$("#docNext").hide();
-}
+
 
 function searchDoctor(){
 	var searchValue = $("#docSearchId").val();
 	if(searchValue.length<3){}
 	else{
 		$.ajax({
-			  url: apipath+'search_doctor?cid=SKF&sync_code='+localStorage.sync_code+'&searchValue='+searchValue,
+			  url: apipath+'search_doctor?cid=DEMO&sync_code='+localStorage.sync_code+'&searchValue='+searchValue,
 			  success: function(resStr) {
 				if (resStr!=""){
 					keywordStr=resStr.split("||");
@@ -100,8 +94,10 @@ function searchDoctor(){
 						  var doctorAddress=keywordLi[3]
 						  //  data-role="button"  border:1px solid #00e6e6;
 						  keywordS+='<li onclick="listClick(\''+doctorId+'\',\''+doctorName+'\',\''+doctorArea+'\',\''+doctorAddress+'\')">'
+						  keywordS+='<a href="">'
 						  keywordS+='<h4 style="margin-bottom:10px; " >'+doctorName+'</h4>'
 						  keywordS+='<p>'+doctorAddress+'</p>'
+						  keywordS+='</a>'
 						  keywordS+='</li>'
 						  
 					  }
@@ -128,6 +124,8 @@ function searchDoctor(){
 
 function listClick(doctorId, doctorName, doctorArea, doctorAddress){
 		var doc =  doctorId+' <dddd> '+doctorName+' <dddd> '+doctorArea+' <dddd> '+doctorAddress;
+		$("#docName").text(doctorName);
+		$("#docAddress").text(doctorAddress);
 		localStorage.setItem('docInfo', doc);
 		$("#docNext").show();
 		
@@ -172,43 +170,44 @@ function summarySubmit(){
 		}
 }
 
-
-
 var ul = document.getElementById('myUL');
 var optionVal = new Array();
+
 ul.onclick = function(event){
 	var target = event.target.innerHTML;
 	if(optionVal.indexOf(target)==-1){
 		optionVal.push(target);
 	}
-	localStorage.setItem('item', optionVal);
 };
 
-
 function checkListLoad(){
-		
-		var nVal = localStorage.getItem('item');
+		localStorage.setItem('item', optionVal);
 		var medList='<ul id="selectedMedicineUL">';
-		var valBr = nVal.split(',');
-		for(i=0; i < valBr.length; i++){
-			medList+='<li><a href="#">'+valBr[i]+'</a></li>';
+		for(i=0; i < optionVal.length; i++){
+			medList+='<li><a href="#">'+optionVal[i]+'</a></li>';
 			
 		}
 		medList+='</ul>';
 		
-		
 		$("#selectedMedicine").empty();
 		$('#selectedMedicine').append(medList).trigger('create');
 		
-		var optionVal = new Array();
 		 $("ul[id*=selectedMedicineUL] li").click(function(){
+			 var selVal = $(this).text();
+			 var arrInd = optionVal.indexOf(selVal);
+			optionVal.splice(arrInd, 1);
 			$(this).remove();
+			localStorage.setItem('item', optionVal);
 		 });
 		url = "#third_page";
 		$.mobile.navigate(url);
 		 
 }
-
+function goDoctor(){
+	url = "#doctor_search_page";
+	$.mobile.navigate(url);
+	$("#docNext").hide();
+}
 
 
 /*camera area start*/
